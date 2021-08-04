@@ -11,8 +11,8 @@ O Node e o NPM são instalados em conjunto por meio de um pacote binário prepar
 NPM também pode ser utilizado para instalar (globalmente) o Express Application Generator, uma ferramenta que cria um "esqueleto" de um app Express, seguindo o padrão MVC. O gerador de app é opcional porque você não precisa dessa ferramenta para criar um app ou um construtor Express para ter a mesma arquitetura. Nós vamos usá-lo nesta seção porque nos permite iniciar uma aplicação de uma maneira mais rápida e promover uma estrutura modular.
 
 ```
-Nota: Ao contrário de muitos outros framework que não oferecem um servidor web junto ao ambiente de desenvolvimento, 
-o Node/Express cria e roda o seu próprio servidor web.
+Nota: Ao contrário de muitos outros framework que não oferecem um servidor web junto
+ao ambiente de desenvolvimento, o Node/Express cria e roda o seu próprio servidor web.
 ```
 
 Há outras ferramentas periféricas que integram o ambiente de desenvolvimento, é o caso dos editores de textos (códigos), conhecidos como IDE, e versionadores de códigos, como o Git, que ajudam a gerenciar diferentes versões do código. Estamos partindo da ideia de que você já conhece essas ferramentas e as têm instaladas (em especial o editor de texto).
