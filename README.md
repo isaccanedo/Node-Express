@@ -57,7 +57,7 @@ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-** Atenção: Não faça a instalação direto do repositório normal do Ubuntu pois ele contém versões antigas do Node.**
+**Atenção: Não faça a instalação direto do repositório normal do Ubuntu pois ele contém versões antigas do Node.
 
 ### Testando a instalação do Nodejs e do NPM
 O jeito mais fácil de testar se tudo correu bem na instalação é checar qual a versão do Node está rodando no computador. Para isso, vá ao terminal/command prompt e digite o seguinte comando para retornar a resposta com a versão mais recente.
@@ -197,11 +197,120 @@ Vá para a seguinte URL (http://127.0.0.1:8000/). Se tudo estiver funcionando co
 ### Desenvolvendo dependências
 Se você utilizar uma dependência apenas durante o desenvolvimento da aplicação, é recomendado que você a salve como uma "development dependency". Dessa forma, o pacote não será utilizado no ambiente de produção. Por exemplo: caso utilizar o pacote esling (JavaScript Linting), você faria a instalação via NPM da seguinte forma.
 
+Se você utilizar uma dependência apenas durante o desenvolvimento da aplicação, é recomendado que você a salve como uma "development dependency". Dessa forma, o pacote não será utilizado no ambiente de produção. Por exemplo: caso utilizar o pacote esling (JavaScript Linting), você faria a instalação via NPM da seguinte forma.
 
+npm install eslint --save-dev
 
+Assim, a esling vai aparecer da seguinte forma na lista de dependências do package.json.
 
+```
+  "devDependencies": {
+    "eslint": "^4.12.1"
+  }
+  ```
+```
+Note: "Linters" são ferramentas que nos ajudam a identificar e reportar que 
+o código está sendo escrito dentro das melhores práticas.
+```
 
+# Rodando tarefas
+Além de definir e buscar dependências, você também pode nomear scripts dentro do seu arquivo package.json e chamar o NPM para executá-lo a partir de um run-script command. Essa abordagem é comum para automatizar testes e tarefas ao longo do desenvolvimento (por exemplo: minificar o JavaScript, reduzir imagens, LINT/análise de códigos, etc).
 
+```
+Nota: Ferramentas de automação de tarefas como o Gulp e o Grunt 
+também podem ser utilizados, além de outros pacotes externos. 
+```
 
+Para definir o script que roda o esling, citado na seção acima, nós precisamos adicionar o seguinte bloco no nosso package.json (importante: sua aplicação precisa ter como source está na pasta /src/js):
 
+```
+"scripts": {
+  ...
+  "lint": "eslint src/js"
+  ...
+}
+```
 
+Explicando um pouco mais: eslint src/js é o comando que colocamos no nosso terminal para rodar o eslint nos arquivos JavaScript situados no diretório src/js dentro do diretório do nosso app. Incluindo o comando, criamos o comando de atalho - lint.
+
+```
+npm run-script lint
+# OR (using the alias)
+npm run lint
+```
+
+O exemplo pode não parecer mais curto do que o comando original, mas com o que você aprendeu é possível incluir comandos bem maiores dentro do npm scripts, como as cadeias de múltiplos comandos. Você pode até escrever um único script npm para rodar todos os seus testes de uma só vez.
+
+# Instalando o Express Application Generator
+O Express Application Generator é uma ferramenta que cria "esqueleto" para aplicações Express. A instalação é realizada via NPM como mostrada a seguir (o comando -g instala a pacote globalmente, ou seja, você pode acessá-lo de qualquer lugar do seu computador).
+
+```
+npm install express-generator -g
+```
+
+Para criar um aplicativo Express chamado "helloworld" com as configurações padrões, vá até o local/pasta em que você deseja desenvolver o projeto e escreva a seguinte linha de comando:
+
+```
+express helloworld
+```
+
+**Nota:  Você também pode definir a biblioteca de template que pretende usar e muitas outras configurações. Use o comando help para ver todas as opções. 
+
+```
+express --help
+```
+
+O NPM vai criar um novo aplicativo Express em uma subpasta na localização em que você está. O progresso será apresentado no console. Para finalizar, o processo, a ferramenta mostrará os comandos que você precisa seguir para instalar a dependência Node e iniciar o seu app.
+
+O novo app terá um arquivo package.json no diretório raiz. Você pode abrir esse arquivo para checar o que foi instalado, incluindo o Express e Jade (template library)
+
+```
+{
+  "name": "helloworld",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0",
+    "serve-favicon": "~2.4.5"
+  }
+}
+```
+
+Instale todas as dependências para o app helloworld com o NPM, de acordo com os comandos abaixo:
+
+```
+cd helloworld
+npm install
+```
+Agora, rode o aplicativo (o comando muda um pouco entre Windows, Linux/macOS), como está no código a seguir:
+
+```
+# Rode o helloworld no Windows
+SET DEBUG=helloworld:* & npm start
+
+# Rode helloworld no Linux/macOS
+DEBUG=helloworld:* npm start
+```
+
+O comando DEBUG gera um loggin bem útil, apresentando resultados, como abaixo:
+
+```
+>SET DEBUG=helloworld:* & npm start
+
+> helloworld@0.0.0 start D:\Github\expresstests\helloworld
+> node ./bin/www
+ helloworld:server Listening on port 3000 +0ms
+```
+
+Abre um browser e navegue para http://127.0.0.1:3000/ e veja a página default apresentada pelo aplicativo.
+
+# Sumário
+Agora você tem o desenvolvimento do Node pronto para rodar no seu computador e que pode ser utilizado para criar aplicações web com o framework Express. Você também viu como o NPM é utilizado para importar o Express em sua aplicação e como criar um esqueleto a partir do Express Aplication Generator.
