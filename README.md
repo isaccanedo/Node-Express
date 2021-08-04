@@ -97,6 +97,105 @@ console.log('Server running at http://127.0.0.1:8000/')
 
 O código importa o módulo "http" e o utiliza para criar um servidor (createServer()) que escuta as requisições HTTP na porta 8000. O script, então, imprime a mensagem no console. A função createServer() recebe como argumento uma função callback que é chamada quando recebe uma requisição HTTP - isso retorna uma resposta com um status 200 ("OK") do HTTP e o texto "Hello World".
 
+```
+Nota:  Não se preocupe se você não entendeu exatamente o que esse código faz. 
+Nós vamos explicar isso em mais detalhes quando iniciarmos a parte do Express.
+```
+
+Inicie o servidor e navegue pelo mesmo diretório que o seu arquivo hellonode.js no terminal. Depois chame o Node da seguinte forma:
+
+```
+>node hellonode.js
+Server running at http://127.0.0.1:8000/
+```
+
+Navegue até a URL (http://127.0.0.1:8000/). Se tudo estiver funcionando bem, o browser vai apresentar a frase "Hello World".
+
+# Usando o NPM
+Ao lado do próprio Node, o NPM é a ferramenta de trabalho mais importante nas aplicações Node. O NPM é usado para buscar qualquer pacote (biblioteca JavaScript) que uma aplicação precisa para ser desenvolvida, testada ou produzida, além de ser adotado para rodar testes ao longo de todo o processo de desenvolvimento.
+
+Nota: A partir da perspectiva do Node, Express é um pacote que precisa ser instalado utilizando o NPM e depois importado para o seu código.
+
+Você pode usar o NPM separadamente para buscar cada pacote desejado. Em geral, nós gerenciamos as dependências com um arquivo chamado package.json. Esse arquivo lista todas as dependências para um pacote JavaScript específico, incluindo o nome do pacote, a versão, descrição, arquivo de inicialização, produção de dependências, desenvolvimento de dependências, versões do Node que podem ser utilizadas. O package.json contém tudo que o NPM precisa para buscar e rodar a sua aplicação (se você está escrevendo uma biblioteca para ser reutilizável, você pode usar essa definição para fazer o upload do pacote para o repositório npm e deixá-lo acessível a qualquer usuário).
+
+### Adicionando dependências
+Os passos seguintes mostram como baixar pacotes via NPM, salvá-los nas dependências do projeto e importá-los/chamá-los para dentro da aplicação Node.
+
+Nota:  Nesta seção mostraremos como buscar e instalar o pacote do Express. Depois, explicaremos como esse e outros pacotes já estão especificados para nós graças ao Express Application Generator. É  muito importante entendermos como o NPM funciona e o que é criado com o generator. 
+
+Primeiro passo é criar um diretório para sua aplicação. No prompt, insira os comandos a seguir.
+mkdir myapp
+cd myapp
+Copy to Clipboard
+ Use o comando npm init para criar o arquivo package.json da sua aplicação. Esse comando registra para você uma série de informações, como o nome e a versão do seu aplicativo, além do nome do seu "entry point" (index.js por padrão). Por hora, vamos manter a configuração padrão.
+npm init
+
+Se você acessar o arquivo package.json (cat packge.json), você verá toda a configuração padrão e, ao final, o tipo de licença que o app está utilizando.
+
+```
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+```
+
+Agora, instale o Express dentro do diretório myapp. O pacote será salvo automaticamente na lista de dependências do seu package.json.
+npm install express
+
+A lista de dependências do package.json agora mostra também a versão do Express que estamos usando. Está grifada no final do arquivo.
+
+```
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
+```
+
+Para usar o Express, é preciso incluir a função require() no arquivo index.js dentro da sua aplicação. Crie esse arquivo agora mesmo na pasta raiz "myapp" e inclua o código a seguir.
+
+```
+var express = require('express')
+var app = express()
+
+app.get('/', function (req, res) {
+  res.send('Hello World!')
+})
+
+app.listen(8000, function () {
+  console.log('Example app listening on port 8000!')
+})
+```
+
+O código mostra uma aplicação web bem simples cujo objetivo único é imprimir a mensagem "HelloWorld". Em linhas gerais, esse arquivo importa o módulo do express e o utiliza para criar um servidor (app) que escuta as requisições HTTP pela porta 8000 e imprime a mensagem no console, além de definir qual URL usada para testar o servidor. A função app.get() responde apenas às requisições HTTP feitas com o método GET, desde que especificadas com o path ('/'). Nesse caso, chamando a função para enviar a mensagem Hello World!
+
+Rode a linha de comando abaixo para iniciar o servidor.
+
+```
+>node index.js
+Example app listening on port 8000
+```
+
+Vá para a seguinte URL (http://127.0.0.1:8000/). Se tudo estiver funcionando corretamente, o browser vai mostrar a mensagem "Hello World!".
+
+### Desenvolvendo dependências
+Se você utilizar uma dependência apenas durante o desenvolvimento da aplicação, é recomendado que você a salve como uma "development dependency". Dessa forma, o pacote não será utilizado no ambiente de produção. Por exemplo: caso utilizar o pacote esling (JavaScript Linting), você faria a instalação via NPM da seguinte forma.
 
 
 
